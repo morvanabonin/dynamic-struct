@@ -39,6 +39,15 @@ type (
 		// dStruct := builder.Build()
 		//
 		Build() DynamicStruct
+		// BuildWithPkgPath returns definition for dynamic struct.
+		// Definition can be used to create new instances.
+		// This does the same as Build() except that it also adds
+		// PkgPath to every struct field (this is helpful for unexported
+		// fields)
+		//
+		// dStruct := builder.BuildWithPkgPath()
+		//
+		BuildWithPkgPath() DynamicStruct
 	}
 
 	// FieldConfig holds single field's definition.
