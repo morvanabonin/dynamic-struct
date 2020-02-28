@@ -45,9 +45,9 @@ type (
 		// PkgPath to every struct field (this is helpful for unexported
 		// fields)
 		//
-		// dStruct := builder.BuildWithPkgPath()
+		// dStruct := builder.BuildWithPkgPath("github.com/xdevs23/dynamic-struct")
 		//
-		BuildWithPkgPath() DynamicStruct
+		BuildWithPkgPath(pkgPath string) DynamicStruct
 	}
 
 	// FieldConfig holds single field's definition.
