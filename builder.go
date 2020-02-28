@@ -199,7 +199,8 @@ func (b *builderImpl) BuildWithPkgPath(pkgPath string) DynamicStruct {
 
 	for name, field := range b.fields {
 		finalPkgPath := pkgPath
-		if unicode.IsLower(utf8.DecodeRuneInString(name)) {
+		r, _ := utf8.DecodeRuneInString(name)
+		if unicode.IsLower(r) {
 			// Lower case names are unexported and thus must not have a PkgPath
 			finalPkgPath = ""
 		}
