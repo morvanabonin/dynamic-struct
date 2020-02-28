@@ -3,6 +3,7 @@ package dynamicstruct
 import (
 	"reflect"
 	"unicode"
+	"unicode/utf8"
 )
 
 type (
@@ -198,7 +199,7 @@ func (b *builderImpl) BuildWithPkgPath(pkgPath string) DynamicStruct {
 
 	for name, field := range b.fields {
 		finalPkgPath := pkgPath
-		if unicode.IsLower(name[0]) {
+		if unicode.IsLower(utf8.DecodeRuneInString(name)) {
 			// Lower case names are unexported and thus must not have a PkgPath
 			finalPkgPath = ""
 		}
