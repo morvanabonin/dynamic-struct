@@ -181,6 +181,23 @@ func (b *builderImpl) Build() DynamicStruct {
 	}
 }
 
+func (b *builderImpl) BuildWithPkgPath(pkgPath string) DynamicStruct {
+	var structFields []reflect.StructField
+
+	for name, field := range b.fields {
+		structFields = append(structFields, reflect.StructField{
+			Name: name,
+			Type: reflect.TypeOf(field.typ),
+			Tag:  reflect.StructTag(field.tag),
+			PkgPath: pkgPath,
+		})
+	}
+
+	return &dynamicStructImpl{
+		definition: reflect.StructOf(structFields),
+	}
+}
+
 func (f *fieldConfigImpl) SetType(typ interface{}) FieldConfig {
 	f.typ = typ
 	return f
