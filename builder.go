@@ -1,6 +1,9 @@
 package dynamicstruct
 
-import "reflect"
+import (
+	"reflect"
+	"unicode"
+)
 
 type (
 	// Builder holds all fields' definitions for desired structs.
@@ -194,11 +197,16 @@ func (b *builderImpl) BuildWithPkgPath(pkgPath string) DynamicStruct {
 	var structFields []reflect.StructField
 
 	for name, field := range b.fields {
+		finalPkgPath := pkgPath
+		if unicode.IsLower(name[0]) {
+			// Lower case names are unexported and thus must not have a PkgPath
+			finalPkgPath = ""
+		}
 		structFields = append(structFields, reflect.StructField{
 			Name: name,
 			Type: reflect.TypeOf(field.typ),
 			Tag:  reflect.StructTag(field.tag),
-			PkgPath: pkgPath,
+			PkgPath: finalPkgPath,
 		})
 	}
 
