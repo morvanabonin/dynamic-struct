@@ -200,8 +200,8 @@ func (b *builderImpl) BuildWithPkgPath(pkgPath string) DynamicStruct {
 	for name, field := range b.fields {
 		finalPkgPath := pkgPath
 		r, _ := utf8.DecodeRuneInString(name)
-		if unicode.IsLower(r) {
-			// Lower case names are unexported and thus must not have a PkgPath
+		if unicode.IsUpper(r) {
+			// Upper case names are exported and thus must not have a PkgPath
 			finalPkgPath = ""
 		}
 		structFields = append(structFields, reflect.StructField{
